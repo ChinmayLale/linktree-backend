@@ -1,20 +1,27 @@
 model User {
-    id              String   @id @default(uuid())
-    email           String   @unique
-    username        String   @unique
+    id              String        @id @default(uuid())
+    email           String        @unique
+    username        String        @unique
     name            String
     bio             String?
+    tags            String[] // array of tags for categorization
     avatarUrl       String? // profile picture
-    createdAt       DateTime @default(now())
-    updatedAt       DateTime @updatedAt
-    provider        String? // for OAuth: 'google', 'github', etc.
+    createdAt       DateTime      @default(now())
+    updatedAt       DateTime      @updatedAt
+    provider        AuthProvider? // for OAuth: 'google', 'github', etc.
     password        String? // optional for credentials-based auth
-    isVerified      Boolean  @default(false)
-    isProfilePublic Boolean  @default(true)
+    isVerified      Boolean       @default(false)
+    isProfilePublic Boolean       @default(true)
     // Relations
     // pages   Page[] // one user can have multiple link pages
     // theme   Theme?  @relation(fields: [themeId], references: [id])
     themeId         String?
 
     @@map("users")
+}
+
+enum AuthProvider {
+    GOOGLE
+    GITHUB
+    CREDENTIALS
 }

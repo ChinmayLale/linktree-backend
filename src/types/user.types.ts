@@ -5,6 +5,7 @@ export type UserLoginSignup = {
     username: String
     name: String
     bio: String
+    token: String
     avatarUrl: String
     createdAt: Date
     updatedAt: Date

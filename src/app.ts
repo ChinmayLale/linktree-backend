@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import cookieParser from "cookie-parser";
 import { globalErrorHandler } from "./utils/apiError";
+import { authRouter } from './routes/auth.router';
 
 const app = express();
 
@@ -18,8 +19,6 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(express.static("public"));
 app.use(cookieParser());
 
-
-
 app.get('/ping', (req, res) => {
     res.status(200).json({
         success: true,
@@ -29,6 +28,9 @@ app.get('/ping', (req, res) => {
     });
 })
 
-// app.use("/api", routes);
+
+// Auth Router
+app.use("/api/v1/auth", authRouter);
+
 
 export { app };

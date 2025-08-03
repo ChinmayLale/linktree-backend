@@ -4,6 +4,7 @@ import cors from 'cors';
 import cookieParser from "cookie-parser";
 import { globalErrorHandler } from "./utils/apiError";
 import { authRouter } from './routes/auth.router';
+import { userRouter } from './routes/user.router';
 
 const app = express();
 
@@ -33,4 +34,8 @@ app.get('/ping', (req, res) => {
 app.use("/api/v1/auth", authRouter);
 
 
+// User Router
+app.use("/api/v1/user", userRouter);
+
+app.use(globalErrorHandler);
 export { app };

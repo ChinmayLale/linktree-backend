@@ -1,53 +1,64 @@
-import { Request, Response } from "express";
-import { ApiError } from "../../utils/apiError";
-import { ApiResponse } from "../../utils/apiResponse";
-import { User, AuthProvider } from "@prisma/client"
-import { UserLoginSignup } from "../../types/user.types";
+import { Request, Response, NextFunction } from "express";
 import { prisma } from "../../db/db.config";
 import { createJwtToken } from "../../services/jwt.service";
+import { ApiError } from "../../utils/apiError";
+import { ApiResponse } from "../../utils/apiResponse";
+import { UserLoginSignup } from "../../types/user.types";
+import bcrypt from "bcrypt";
+import { AuthProvider } from "@prisma/client";
 
-const signupController = async (req: Request, res: Response) => {
+const signupController = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const { email, provider, password, username, name, profilePic } = req.body; // Assuming user data is sent in the request body
+        const { email, provider, password, username, name, profilePic } = req.body;
+        console.log({ reqBody: req.body });
 
-        const user = {
-            email: email,
-            provider: provider as AuthProvider,
-            name: name || "",
-            username: username || "",
-            password: password, // Password is optional for social signups
-            avatarUrl: profilePic || ""
-        } as User;
-        if (!user.provider) {
+        if (!provider) {
             throw new ApiError(400, "Provider is required for signup");
         }
 
-        // Check if the user already exists
+
+        if (!Object.values(AuthProvider).includes(provider)) {
+            throw new ApiError(400, "Invalid provider type. Must be GOOGLE, GITHUB, or CREDENTIALS");
+        }
+        
+        // Check if user already exists
         const existingUser = await prisma.user.findUnique({
-            where: {
-                email: user.email
-            }
-        })
+            where: { email }
+        });
 
         if (existingUser) {
             throw new ApiError(400, "User already exists with this email");
         }
 
-        // Create a new user
-        let createdUser = {} as User;
-        if (user.provider === AuthProvider.GOOGLE) {
-            createdUser = await prisma.user.create({
-                data: {
-                    email: user.email,
-                    name: user.name,
-                    provider: user.provider,
-                    username: user.username,
-                }
-            })
+        // Handle password logic for CREDENTIALS provider
+        let hashedPassword: string | undefined = undefined;
+        if (provider === AuthProvider.CREDENTIALS) {
+            if (!password || password.trim() === "") {
+                throw new ApiError(400, "Password is required for credentials signup");
+            }
+            console.log(`Hashing password for user: ${email}`);
+            hashedPassword = await bcrypt.hash(password, 10);
         }
 
-        //Create Jwt Token 
-        const jwtToken = createJwtToken({ user: createdUser });
+        // Create the user
+        const createdUser = await prisma.user.create({
+            data: {
+                email,
+                name: name || "",
+                provider: provider as AuthProvider,
+                username: username || "",
+                password: hashedPassword, // will be undefined for social providers
+                avatarUrl: profilePic || ""
+            }
+        });
+
+        console.log("Created User From DB:", createdUser);
+
+        // Generate JWT token
+        const jwtToken = await createJwtToken({ user: createdUser });
+        if (!jwtToken) {
+            throw new ApiError(500, "Failed to create JWT token");
+        }
 
         const response: UserLoginSignup = {
             id: createdUser.id,
@@ -61,12 +72,12 @@ const signupController = async (req: Request, res: Response) => {
             avatarUrl: createdUser.avatarUrl || "",
         };
 
+        console.log({ response });
         return res.status(201).send(new ApiResponse(200, "User signed up successfully", response));
-    } catch (error: Error | any) {
-        throw new ApiError(500, "Internal Server Error", error);
+    } catch (error: any) {
+        console.log({ error });
+        next(error);
     }
-}
-
-
+};
 
 export { signupController };

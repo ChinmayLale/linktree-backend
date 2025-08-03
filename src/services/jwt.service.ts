@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { User } from "@prisma/client";
 
-const createJwtToken = ({ user }: { user: Partial<User> }): string => {
+const createJwtToken =async ({ user }: { user: Partial<User> }): Promise<string> => {
     const payload = {
         id: user.id,
         email: user.email,

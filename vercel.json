@@ -6,7 +6,9 @@
             "use": "@vercel/node",
             "config": {
                 "includeFiles": [
-                    "./prisma/**/*"
+                    "prisma/schema.prisma",
+                    "prisma/migrations/**",
+                    "node_modules/.prisma/client/**"
                 ]
             }
         }
@@ -14,7 +16,7 @@
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "/build/index.js"
+            "dest": "build/index.js"
         }
     ],
     "env": {

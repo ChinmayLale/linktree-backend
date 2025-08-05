@@ -2,14 +2,13 @@
     "version": 2,
     "builds": [
         {
-            "src": "dist/index.js",
+            "src": "src/index.ts",
             "use": "@vercel/node",
             "config": {
                 "includeFiles": [
-                    "build/**",
-                    "prisma/**/**",
+                    "prisma/schema.prisma",
+                    "prisma/migrations/**",
                     "node_modules/.prisma/client/**"
-                    
                 ]
             }
         }
@@ -17,7 +16,10 @@
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "dist/index.js"
+            "dest": "src/index.ts"
         }
-    ]
+    ],
+    "env": {
+        "NODE_ENV": "production"
+    }
 }

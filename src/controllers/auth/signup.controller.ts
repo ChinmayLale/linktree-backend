@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction, CookieOptions } from "express";
 import { prisma } from "../../db/db.config";
 import { createJwtToken } from "../../services/jwt.service";
 import { ApiError } from "../../utils/apiError";
@@ -20,7 +20,7 @@ const signupController = async (req: Request, res: Response, next: NextFunction)
         if (!Object.values(AuthProvider).includes(provider)) {
             throw new ApiError(400, "Invalid provider type. Must be GOOGLE, GITHUB, or CREDENTIALS");
         }
-        
+
         // Check if user already exists
         const existingUser = await prisma.user.findUnique({
             where: { email }
@@ -52,7 +52,7 @@ const signupController = async (req: Request, res: Response, next: NextFunction)
             }
         });
 
-        console.log("Created User From DB:", createdUser);
+        // console.log("Created User From DB:", createdUser);
 
         // Generate JWT token
         const jwtToken = await createJwtToken({ user: createdUser });
@@ -73,7 +73,15 @@ const signupController = async (req: Request, res: Response, next: NextFunction)
         };
 
         console.log({ response });
-        return res.status(201).send(new ApiResponse(200, "User signed up successfully", response));
+        const options: CookieOptions = {
+            httpOnly: true,
+            secure: false,
+            sameSite: 'lax',
+            path: '/',
+            maxAge: 24 * 60 * 60 * 1000,
+        }
+
+        return res.cookie('username', username, options).cookie('token', jwtToken, options).status(201).send(new ApiResponse(200, "User signed up successfully", response));
     } catch (error: any) {
         console.log({ error });
         next(error);

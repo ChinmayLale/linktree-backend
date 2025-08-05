@@ -16,10 +16,13 @@
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "build/index.js"
+            "dest": "/build/index.js"
         }
     ],
     "env": {
         "NODE_ENV": "production"
+    },
+    "engines": {
+        "node": "18.x"
     }
 }

@@ -1,0 +1,13 @@
+model EventMetadata {
+    id        String    @id @default(uuid())
+    eventType EventType
+    date      DateTime
+    location  String
+    Link      Link?
+}
+
+enum EventType {
+    concert
+    conference
+    meetup
+}

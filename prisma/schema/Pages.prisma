@@ -1,11 +1,10 @@
 // Prisma Model for Pages Like Linktree Link or linktree/username 
 
-model Page{
-    id          String   @id @default(uuid())
-    title       String
-    description String?
-    username    String
-    
+model Page {
+  id          String  @id @default(uuid())
+  title       String
+  description String?
+  username    String
 
-    @@map("pages")
+  @@map("pages")
 }

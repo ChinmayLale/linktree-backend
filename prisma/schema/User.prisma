@@ -1,30 +1,31 @@
 model User {
-    id              String        @id @default(uuid())
-    email           String        @unique
-    username        String        @unique
-    name            String
-    bio             String?
-    tags            String[] // array of tags for categorization
-    avatarUrl       String? // profile picture
-    createdAt       DateTime      @default(now())
-    updatedAt       DateTime      @updatedAt
-    provider        AuthProvider? // for OAuth: 'google', 'github', etc.
-    password        String? // optional for credentials-based auth
-    isVerified      Boolean       @default(false)
-    isProfilePublic Boolean       @default(true)
-    linksCount      Int           @default(0) // number of links created by the user
-    totalClicks     Int           @default(0) // total clicks across all links
-    ctr             Float         @default(0.0) // click-through rate, calculated as totalClicks / linksCount
-    // Relations
-    // pages   Page[] // one user can have multiple link pages
-    // theme   Theme?  @relation(fields: [themeId], references: [id])
-    themeId         String?
+  id              String        @id @default(uuid())
+  email           String        @unique
+  username        String        @unique
+  name            String
+  bio             String?
+  tags            String[] // array of tags for categorization
+  avatarUrl       String? // profile picture
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  provider        AuthProvider? // for OAuth: 'google', 'github', etc.
+  password        String? // optional for credentials-based auth
+  isVerified      Boolean       @default(false)
+  isProfilePublic Boolean       @default(true)
+  linksCount      Int           @default(0) // number of links created by the user
+  totalClicks     Int           @default(0) // total clicks across all links
+  ctr             Float         @default(0.0) // click-through rate, calculated as totalClicks / linksCount
+  // Relations
+  // pages   Page[] // one user can have multiple link pages
+  // theme   Theme?  @relation(fields: [themeId], references: [id])
+  themeId         String?
+  Link            Link[]
 
-    @@map("users")
+  @@map("users")
 }
 
 enum AuthProvider {
-    GOOGLE
-    GITHUB
-    CREDENTIALS
+  GOOGLE
+  GITHUB
+  CREDENTIALS
 }

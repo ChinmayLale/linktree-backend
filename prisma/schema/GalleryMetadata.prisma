@@ -1,0 +1,5 @@
+model GalleryMetadata {
+    id     String   @id @default(uuid())
+    images String[]
+    Link   Link?
+}

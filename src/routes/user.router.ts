@@ -1,11 +1,15 @@
 import { Router } from 'express';
-import { getUserProfileController } from '../controllers/user/getUserProfile.controller';
+import { getUserInfo } from '../controllers/user/getUserProfileInfo.controller';
+import { getUserProfile } from '../controllers/user/getUserProfile.controller';
+import { authenticate } from '../middlewares/auth.middleware';
 
 
 
 const userRouter = Router();
 
-userRouter.get('/:username', getUserProfileController);
+userRouter.get('/', getUserInfo);
+
+userRouter.get('/profile', authenticate ,getUserProfile); // Assuming this is for getting the profile of the authenticated user
 
 
 

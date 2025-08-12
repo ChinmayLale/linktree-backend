@@ -1,0 +1,36 @@
+model ThemeSettings {
+  id              String         @id @default(uuid())
+  name            String         @unique
+  backgroundColor String
+  backgroundType  BackgroundType
+  primaryColor    String
+  textColor       String
+  secondaryText   String
+  fontFamily      String
+  borderRadius    Int
+  cardStyle       String
+  layout          CardLayout
+  cardBackground  String
+  cardBorderColor String
+  cardShadow      String
+  cardPadding     String
+  cardBorder      String
+  backDropBlur    String
+  shadow          String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum BackgroundType {
+  SOLID
+  GRADIENT
+  IMAGE
+  GLASS
+}
+
+enum CardLayout {
+  STACK
+  GRID
+  MASONRY
+}

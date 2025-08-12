@@ -1,0 +1,39 @@
+model Link {
+    id        String   @id @default(uuid())
+    type      LinkType
+    title     String
+    url       String
+    icon      String?
+    color     String
+    active    Boolean  @default(true)
+    style     String
+    thumbnail String?
+    clicks    Int?
+
+    musicMetadata   MusicMetadata? @relation(fields: [musicMetadataId], references: [id])
+    musicMetadataId String         @unique
+
+    videoMetadata   VideoMetadata? @relation(fields: [videoMetadataId], references: [id])
+    videoMetadataId String         @unique
+
+    eventMetadata   EventMetadata? @relation(fields: [eventMetadataId], references: [id])
+    eventMetadataId String         @unique
+
+    galleryMetadata   GalleryMetadata? @relation(fields: [galleryMetadataId], references: [id])
+    galleryMetadataId String           @unique
+
+    userId    String
+    user      User     @relation(fields: [userId], references: [id])
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+enum LinkType {
+    music
+    video
+    event
+    gallery
+    contact
+    social
+    default
+}

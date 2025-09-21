@@ -11,6 +11,8 @@ model User {
   isVerified      Boolean       @default(false)
   isProfilePublic Boolean       @default(true)
 
+  links Link[]
+
   themeId String? // One theme per user
   theme   ThemeSettings? @relation(fields: [themeId], references: [id])
 

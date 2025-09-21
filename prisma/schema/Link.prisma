@@ -1,5 +1,7 @@
 model Link {
     id        String   @id @default(uuid())
+    userId    String // one user → many links
+    user      User     @relation(fields: [userId], references: [id])
     type      LinkType
     title     String
     url       String
@@ -21,7 +23,6 @@ model Link {
 
     galleryMetadata   GalleryMetadata? @relation(fields: [galleryMetadataId], references: [id])
     galleryMetadataId String           @unique
-
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt

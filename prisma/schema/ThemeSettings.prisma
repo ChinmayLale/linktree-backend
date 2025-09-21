@@ -13,10 +13,12 @@ model ThemeSettings {
   cardBackground  String
   cardBorderColor String
   cardShadow      String
-  cardPadding     String
+  cardPadding     String?
   cardBorder      String
   backDropBlur    String
   shadow          String
+
+  users User[] // One theme → many users
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

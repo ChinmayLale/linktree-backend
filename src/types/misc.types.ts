@@ -1,3 +1,5 @@
+import { User } from "@prisma/client";
+
 export type tokenPayload = {
     id: string;
     email: string;
@@ -8,3 +10,14 @@ export type tokenPayload = {
     iat?: number; // Optional issued at timestamp
 
 };
+
+export type SafeUser = Omit<User, "password">;
+
+
+export interface UpdateUserProfileInput {
+    name?: string;
+    bio?: string;
+    tags?: string[];
+    avatarUrl?: string;
+    isProfilePublic?: boolean;
+}

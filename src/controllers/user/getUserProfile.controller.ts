@@ -1,7 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import { ApiResponse } from "../../utils/apiResponse";
 import { ApiError } from "../../utils/apiError";
-import { prisma } from "../../db/db.config";
+import { getUserProfileService } from "../../services/User/Profile.service";
+
 
 
 const getUserProfile = async (req: Request, res: Response, next: NextFunction) => {
@@ -11,12 +12,7 @@ const getUserProfile = async (req: Request, res: Response, next: NextFunction) =
             throw new ApiError(400, "User ID is required");
         }
 
-        const userProfile = await prisma.user.findUnique({
-            where: { id: userId },
-            include: {
-                Link: true, // Include links associated with the user
-            }
-        });
+        const userProfile = await getUserProfileService(userId);
 
         if (!userProfile) {
             throw new ApiError(404, "User profile not found");
@@ -28,6 +24,9 @@ const getUserProfile = async (req: Request, res: Response, next: NextFunction) =
         next(error);
     }
 }
+
+
+
 
 
 export { getUserProfile };

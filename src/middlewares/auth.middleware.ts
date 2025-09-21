@@ -23,7 +23,7 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
         tokenSource = "cookie";
     }
 
-    console.log({ tokenSource });
+    // console.log({ tokenSource });
     if (!token) {
         return res.status(401).send(new ApiError(401, "Authentication token is required"));
     }

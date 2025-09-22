@@ -13,7 +13,7 @@ model User {
 
   links Link[]
 
-  themeId String? // One theme per user
+  themeId String?        @default("clean") // One theme per user
   theme   ThemeSettings? @relation(fields: [themeId], references: [id])
 
   createdAt DateTime @default(now())

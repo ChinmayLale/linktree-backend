@@ -1,22 +1,22 @@
 model ThemeSettings {
   id              String         @id @default(uuid())
-  name            String         @unique
-  backgroundColor String
-  backgroundType  BackgroundType
-  primaryColor    String
-  textColor       String
-  secondaryText   String
-  fontFamily      String
-  borderRadius    Int
-  cardStyle       String
-  layout          CardLayout
-  cardBackground  String
-  cardBorderColor String
-  cardShadow      String
-  cardPadding     String?
-  cardBorder      String
-  backDropBlur    String
-  shadow          String
+  name            String         @unique @default("clean")
+  backgroundColor String         @default("#ffffff")
+  backgroundType  BackgroundType @default(solid)
+  primaryColor    String         @default("#2563eb")
+  textColor       String         @default("#111827")
+  secondaryText   String         @default("#6b7280")
+  fontFamily      String         @default("Inter, sans-serif")
+  borderRadius    Int            @default(8)
+  cardStyle       String         @default("clean")
+  layout          CardLayout?    @default(grid)
+  cardBackground  String         @default("#ffffff")
+  cardBorderColor String         @default("#e5e7eb")
+  cardShadow      String         @default("0 1px 3px rgba(0, 0, 0, 0.1)")
+  cardPadding     String         @default("16px")
+  cardBorder      String         @default("#e5e7eb")
+  backdropBlur    String         @default("0px")
+  shadow          String? // optional, no default
 
   users User[] // One theme → many users
 
@@ -25,14 +25,14 @@ model ThemeSettings {
 }
 
 enum BackgroundType {
-  SOLID
-  GRADIENT
-  IMAGE
-  GLASS
+  solid
+  gradient
+  image
+  glass
 }
 
 enum CardLayout {
-  STACK
-  GRID
-  MASONRY
+  stack
+  grid
+  masonry
 }

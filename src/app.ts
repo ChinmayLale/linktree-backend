@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import { globalErrorHandler } from "./utils/apiError";
 import { authRouter } from './routes/auth.router';
 import { userRouter } from './routes/user.router';
+import { themeRouter } from './routes/theme.router';
 
 const app = express();
 
@@ -36,6 +37,10 @@ app.use("/api/v1/auth", authRouter);
 
 // User Router
 app.use("/api/v1/user", userRouter);
+
+
+// Theme Router
+app.use("/api/v1/theme", themeRouter);
 
 app.use(globalErrorHandler);
 export { app };

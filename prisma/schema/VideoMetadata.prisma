@@ -1,7 +1,0 @@
-model VideoMetadata {
-    id       String  @id @default(uuid())
-    platform String // e.g., YouTube, Vimeo
-    duration String?
-    embedUrl String?
-    Link     Link?
-}

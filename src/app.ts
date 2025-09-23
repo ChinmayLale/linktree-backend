@@ -6,6 +6,7 @@ import { globalErrorHandler } from "./utils/apiError";
 import { authRouter } from './routes/auth.router';
 import { userRouter } from './routes/user.router';
 import { themeRouter } from './routes/theme.router';
+import { linkRouter } from './routes/link.route';
 
 const app = express();
 
@@ -41,6 +42,11 @@ app.use("/api/v1/user", userRouter);
 
 // Theme Router
 app.use("/api/v1/theme", themeRouter);
+
+
+
+//Link Router
+app.use('/api/v1/link', linkRouter);
 
 app.use(globalErrorHandler);
 export { app };

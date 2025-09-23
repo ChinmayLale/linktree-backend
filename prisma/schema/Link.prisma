@@ -1,31 +1,34 @@
 model Link {
-    id        String   @id @default(uuid())
-    userId    String // one user → many links
-    user      User     @relation(fields: [userId], references: [id])
-    type      LinkType
-    title     String
-    url       String
-    icon      String?
-    color     String
-    active    Boolean  @default(true)
-    style     String
+    id     String @id @default(uuid())
+    userId String // Foreign key to User
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    // Core link properties
+    type   LinkType @default(default)
+    title  String
+    url    String
+    icon   String?
+    color  String   @default("#000000")
+    active Boolean  @default(true)
+    style  String   @default("default")
+
+    // Optional fields for enhanced functionality
     thumbnail String?
-    clicks    Int?
+    clicks    Int?     @default(0)
+    duration  String? // For music/video links
+    images    String[] // For gallery links (array of image URLs)
 
-    musicMetadata   MusicMetadata? @relation(fields: [musicMetadataId], references: [id])
-    musicMetadataId String         @unique
+    // Unified metadata as JSON
+    metadata Json? // Store type-specific metadata as JSON
 
-    videoMetadata   VideoMetadata? @relation(fields: [videoMetadataId], references: [id])
-    videoMetadataId String         @unique
-
-    eventMetadata   EventMetadata? @relation(fields: [eventMetadataId], references: [id])
-    eventMetadataId String         @unique
-
-    galleryMetadata   GalleryMetadata? @relation(fields: [galleryMetadataId], references: [id])
-    galleryMetadataId String           @unique
-
+    // Timestamps
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+
+    // Index for performance
+    @@index([userId])
+    @@index([type])
+    @@index([active])
 }
 
 enum LinkType {
@@ -37,3 +40,5 @@ enum LinkType {
     social
     default
 }
+
+// User model (if you need reference)

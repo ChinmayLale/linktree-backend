@@ -1,7 +1,0 @@
-model MusicMetadata {
-    id       String  @id @default(uuid())
-    artist   String
-    album    String
-    duration String?
-    Link     Link?
-}

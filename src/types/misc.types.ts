@@ -62,10 +62,10 @@ export interface LinkItem {
     color: string;
     active: boolean;
     style: string;
-    metadata?: LinkMetadata;
+    metadata?: LinkMetadata | null;
     thumbnail?: string; // Optional thumbnail for links
     clicks?: number; // Optional clicks count for analytics
     duration?: string; // Optional duration for music or video links
     images?: string[]; // Optional images for gallery links
-    isPublished?: boolean;
+    status?: boolean;
 }

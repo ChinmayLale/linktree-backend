@@ -61,3 +61,23 @@ export const updateUserProfileService = async (userId: string, data: UpdateUserP
       throw error;
    }
 };
+
+
+
+export const getUserProfileWithUserNameService = async (userName: string): Promise<User | null> => {
+   try {
+      const userProfile = await prisma.user.findUnique({
+         where: { username: userName },
+         include: {
+            theme: true
+         }
+      });
+      if (!userProfile) {
+         throw new Error("User profile not found");
+      }
+      return userProfile;
+   } catch (error) {
+      console.error("Error fetching user profile:", error);
+      throw error;
+   }
+}

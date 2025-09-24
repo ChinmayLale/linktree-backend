@@ -4,6 +4,7 @@ import { authenticate } from "../middlewares/auth.middleware";
 import { addUserLinkController } from "../controllers/Link/AddUserLink.controller";
 import { PublishLinkController } from "../controllers/Link/PublishLink.controller";
 import { LinkAnalyticsController } from "../controllers/Link/LinkAnalytics.controller";
+import { deleteLinkController } from "../controllers/Link/DeleteLink.controller";
 
 
 
@@ -20,6 +21,8 @@ linkRouter.post('/publish', authenticate, PublishLinkController);
 
 
 linkRouter.post('/analytics/addclick', authenticate, LinkAnalyticsController.AddClickToLinkController);
+
+linkRouter.delete('/delete', authenticate, deleteLinkController);
 
 
 export { linkRouter };

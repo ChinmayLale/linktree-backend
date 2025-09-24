@@ -16,6 +16,6 @@ export const mapLinkToLinkItem = (link: Link): LinkItem => {
       duration: link.duration ?? undefined,
       images: link.images && link.images.length > 0 ? link.images : undefined,
       metadata: link.metadata ? (link.metadata as Record<string, unknown>) : undefined,
-      isPublished: link.status === "PUBLISHED",
+      status: link.status === "PUBLISHED",
    };
 };

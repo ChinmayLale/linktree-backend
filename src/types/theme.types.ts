@@ -2,6 +2,7 @@ export interface ThemeSettings {
    name: string;
    backgroundColor: string;
    backgroundType: "solid" | "gradient" | "image" | "glass";
+   preview?: string;
    primaryColor: string;
    textColor: string;
    fontFamily?: string;

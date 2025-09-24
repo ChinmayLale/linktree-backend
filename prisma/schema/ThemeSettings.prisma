@@ -1,6 +1,7 @@
 model ThemeSettings {
   id              String         @id @default(uuid())
-  name            String         @unique @default("clean")
+  name            String         @unique @default("Clean White")
+  preview         String         @default("bg-white text-gray-900 border border-gray-200")
   backgroundColor String         @default("#ffffff")
   backgroundType  BackgroundType @default(solid)
   primaryColor    String         @default("#2563eb")

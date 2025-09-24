@@ -20,6 +20,8 @@ export const getAllUserLinksController = async (req: Request, res: Response, nex
         return res.status(200).json(new ApiResponse(200, "User links fetched successfully", links));
 
     } catch (error) {
+        console.log("Error while Get User Links ");
+        console.log({ error });
         next(error);
     }
 }

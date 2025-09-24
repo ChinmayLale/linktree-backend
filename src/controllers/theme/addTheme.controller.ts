@@ -17,7 +17,7 @@ export const addThemesController = async (req: Request, res: Response, next: Nex
          return res.status(400).json(new ApiError(400, "Theme is required", "Theme is required"));
       }
 
-      const updateThemes = await addThemesInDb(theme);
+      const updateThemes = await addThemesInDb();
 
       if (!updateThemes) {
          return res.status(404).json(new ApiError(404, "Somthing Went Wrong", "Updating Themes Faild"));

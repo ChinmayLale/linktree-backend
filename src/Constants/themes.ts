@@ -813,3 +813,5 @@ export const templateStyles: Record<string, ThemeSettings> = {
       cardPadding: "16px",
    },
 };
+
+

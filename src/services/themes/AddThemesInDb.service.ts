@@ -1,16 +1,26 @@
+import { templates, templateStyles } from "../../Constants/themes";
 import { prisma } from "../../db/db.config";
 import { ThemeSettings } from "../../types/theme.types";
 
 
 
-export const addThemesInDb = async (Themes: ThemeSettings[]): Promise<boolean> => {
+export const addThemesInDb = async (): Promise<boolean> => {
    try {
 
-      if (!Themes || Themes.length == 0) {
-         return false;
-      }
 
-      const mappedThemes = Themes.map(theme => ({
+      const mergedTemplates = templates.map((template) => {
+         const style = templateStyles[template.id];
+         return {
+            ...style,
+            name: template.name, // Override style name with template name
+            preview: template.preview,
+         };
+      });
+
+      console.log(mergedTemplates);
+
+
+      const mappedThemes = mergedTemplates.map(theme => ({
          ...theme,
          layout: theme.layout
             ? theme.layout.toLowerCase() as "stack" | "grid" | "masonry"

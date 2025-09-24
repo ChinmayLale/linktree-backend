@@ -67,4 +67,5 @@ export interface LinkItem {
     clicks?: number; // Optional clicks count for analytics
     duration?: string; // Optional duration for music or video links
     images?: string[]; // Optional images for gallery links
+    isPublished?: boolean;
 }

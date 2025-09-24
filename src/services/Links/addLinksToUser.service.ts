@@ -7,6 +7,7 @@ import { prisma } from "../../db/db.config";
 
 export const addLinksToUser = async (userId: string, links: LinkItem[]): Promise<number | null> => {
    try {
+
       const addedLinks = await prisma.link.createMany({
          data: links.map((link) => ({
             ...link,

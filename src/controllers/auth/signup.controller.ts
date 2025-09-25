@@ -6,6 +6,7 @@ import { ApiResponse } from "../../utils/apiResponse";
 import { UserLoginSignup } from "../../types/user.types";
 import bcrypt from "bcrypt";
 import { AuthProvider } from "@prisma/client";
+import { updateUsersThemeService } from "../../services/themes/UpdateUsersTheme.service";
 
 const signupController = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -40,6 +41,7 @@ const signupController = async (req: Request, res: Response, next: NextFunction)
             hashedPassword = await bcrypt.hash(password, 10);
         }
 
+        const CLEAN_THEME_ID = "493e7d89-cf07-4241-8fc0-8b2e7cc215f8";
         // Create the user
         const createdUser = await prisma.user.create({
             data: {
@@ -48,11 +50,18 @@ const signupController = async (req: Request, res: Response, next: NextFunction)
                 provider: provider as AuthProvider,
                 username: username || "",
                 password: hashedPassword, // will be undefined for social providers
-                avatarUrl: profilePic || ""
+                avatarUrl: profilePic || "",
+                themeId: CLEAN_THEME_ID
             }
         });
 
         // console.log("Created User From DB:", createdUser);
+
+        if (!createdUser) {
+            throw new ApiError(500, "Failed to create user");
+        }
+
+
 
         // Generate JWT token
         const jwtToken = await createJwtToken({ user: createdUser });

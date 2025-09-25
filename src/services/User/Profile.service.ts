@@ -19,6 +19,9 @@ export const getUserProfileService = async (userId: string): Promise<User | null
    try {
       const userProfile = await prisma.user.findUnique({
          where: { id: userId },
+         include: {
+            theme: true
+         }
       });
       if (!userProfile) {
          throw new Error("User profile not found");

@@ -3,10 +3,10 @@ import { prisma } from "../../db/db.config";
 
 
 
-const updateLinkClicks = async (userId: string, linkId: string): Promise<boolean> => {
+const updateLinkClicks = async (linkId: string): Promise<boolean> => {
    try {
 
-      if (!userId || !linkId) {
+      if (!linkId) {
          console.log("userId || LinkId is missing");
          return false;
       }
@@ -14,7 +14,6 @@ const updateLinkClicks = async (userId: string, linkId: string): Promise<boolean
       const isUpdated = await prisma.link.update({
          where: {
             id: linkId,
-            userId: userId
          },
          data: {
             clicks: {

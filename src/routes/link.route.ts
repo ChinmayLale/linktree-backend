@@ -20,7 +20,7 @@ linkRouter.post('/add', authenticate, addUserLinkController);
 linkRouter.post('/publish', authenticate, PublishLinkController);
 
 
-linkRouter.post('/analytics/addclick', authenticate, LinkAnalyticsController.AddClickToLinkController);
+linkRouter.post('/analytics/addclick', LinkAnalyticsController.AddClickToLinkController);
 
 linkRouter.delete('/delete', authenticate, deleteLinkController);
 

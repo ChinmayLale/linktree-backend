@@ -8,6 +8,7 @@ import bcrypt from "bcrypt";
 import { AuthProvider } from "@prisma/client";
 import { updateUsersThemeService } from "../../services/themes/UpdateUsersTheme.service";
 
+
 const signupController = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { email, provider, password, username, name, profilePic } = req.body;
@@ -46,12 +47,13 @@ const signupController = async (req: Request, res: Response, next: NextFunction)
         const createdUser = await prisma.user.create({
             data: {
                 email,
-                name: name || "",
+                name: name || "Display Name",
                 provider: provider as AuthProvider,
                 username: username || "",
                 password: hashedPassword, // will be undefined for social providers
                 avatarUrl: profilePic || "",
-                themeId: CLEAN_THEME_ID
+                themeId: CLEAN_THEME_ID,
+                bio: "Edit Bio"
             }
         });
 

@@ -67,8 +67,17 @@ const updateViewsOnLinksService = async (userId: string): Promise<boolean> => {
    }
 }
 
+const getViewsVsClickGraph = (userId: string) =>{
+   try {
+      
+   } catch (error) {
+      console.log("Somthing Went Wrong While Getting Clicks Vs Views Graph");
+   }
+}
+
 
 export const LinkAnalyticsService = {
    updateLinkClicks,
-   updateViewsOnLinksService
+   updateViewsOnLinksService,
+   getViewsVsClickGraph
 }

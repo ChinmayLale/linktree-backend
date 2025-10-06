@@ -45,6 +45,19 @@ const AddViewsToLinksController = async (req: Request, res: Response, next: Next
 
 
 
+const getViewsVsClickGraphController = async (req:Request , res:Response , next:NextFunction) => {
+   try {
+      const userId = req.user.id;
+
+      const getViewsVsClickGraph = await LinkAnalyticsService.getViewsVsClickGraph(userId);
+   } catch (error) {
+      console.log("Somthing Went Wrong While Getting Clicks Vs Views Graph");
+      console.log({ error });
+      next(error);
+   }
+}
+
+
 export const LinkAnalyticsController = {
    AddClickToLinkController,
    AddViewsToLinksController

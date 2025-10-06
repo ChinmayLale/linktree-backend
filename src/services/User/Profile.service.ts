@@ -26,6 +26,7 @@ export const getUserProfileService = async (userId: string): Promise<User | null
       if (!userProfile) {
          throw new Error("User profile not found");
       }
+
       return userProfile;
    } catch (error) {
       console.error("Error fetching user profile:", error);

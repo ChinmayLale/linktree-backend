@@ -16,6 +16,8 @@ model User {
   themeId String?        @default("clean") // One theme per user
   theme   ThemeSettings? @relation(fields: [themeId], references: [id])
 
+  views Int @default(0)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

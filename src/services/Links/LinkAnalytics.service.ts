@@ -35,6 +35,40 @@ const updateLinkClicks = async (linkId: string): Promise<boolean> => {
 
 
 
+const updateViewsOnLinksService = async (userId: string): Promise<boolean> => {
+   try {
+      const user = await prisma.user.findFirst({
+         where: {
+            username: userId
+         }
+      })
+
+      if (!user) {
+         console.log("User not found");
+         return false;
+      }
+
+      const updatedViews = await prisma.user.update({
+         where: {
+            id: user.id
+         },
+         data: {
+            views: {
+               increment: 1
+            }
+         }
+      })
+
+      return true;
+   } catch (error) {
+      console.log("Somthing went Wrong While Adding Views To Link In Link Service");
+      console.log({ error });
+      return false;
+   }
+}
+
+
 export const LinkAnalyticsService = {
-   updateLinkClicks
+   updateLinkClicks,
+   updateViewsOnLinksService
 }

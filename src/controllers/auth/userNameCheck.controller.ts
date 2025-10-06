@@ -15,9 +15,10 @@ const userNameCheckController = async (req: Request, res: Response, next: NextFu
         }
 
         // Check if the username already exists in the database
+        // console.log("Checking For UserName : " + username.toString());
         const existingUser = await prisma.user.findUnique({
             where: {
-                username: username.toString().toLowerCase()
+                username: username.toString()
             }
         });
 

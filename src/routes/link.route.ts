@@ -22,6 +22,8 @@ linkRouter.post('/publish', authenticate, PublishLinkController);
 
 linkRouter.post('/analytics/addclick', LinkAnalyticsController.AddClickToLinkController);
 
+linkRouter.post('/analytics/add-views', LinkAnalyticsController.AddViewsToLinksController);
+
 linkRouter.delete('/delete', authenticate, deleteLinkController);
 
 

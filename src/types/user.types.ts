@@ -23,4 +23,5 @@ export type UserProfile = {
     updatedAt: Date;
     followersCount?: number; // Optional, can be fetched separately
     followingCount?: number; // Optional, can be fetched separately
+    views?: number
 }

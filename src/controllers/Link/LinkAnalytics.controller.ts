@@ -45,11 +45,16 @@ const AddViewsToLinksController = async (req: Request, res: Response, next: Next
 
 
 
-const getViewsVsClickGraphController = async (req:Request , res:Response , next:NextFunction) => {
+const getViewsVsClickGraphController = async (req: Request, res: Response, next: NextFunction) => {
    try {
       const userId = req.user.id;
 
       const getViewsVsClickGraph = await LinkAnalyticsService.getViewsVsClickGraph(userId);
+
+      if (getViewsVsClickGraph.length == 0) {
+         return res.status(200).send(new ApiError(404, "Somthing Went Wrong While Getting Clicks Vs Views Graph", "Graph not found"))
+      }
+      return res.status(200).json(new ApiResponse(200, "Graph Fetched Successfully", getViewsVsClickGraph));
    } catch (error) {
       console.log("Somthing Went Wrong While Getting Clicks Vs Views Graph");
       console.log({ error });
@@ -60,5 +65,6 @@ const getViewsVsClickGraphController = async (req:Request , res:Response , next:
 
 export const LinkAnalyticsController = {
    AddClickToLinkController,
-   AddViewsToLinksController
+   AddViewsToLinksController,
+   getViewsVsClickGraphController
 }

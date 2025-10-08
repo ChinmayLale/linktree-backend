@@ -24,6 +24,9 @@ linkRouter.post('/analytics/addclick', LinkAnalyticsController.AddClickToLinkCon
 
 linkRouter.post('/analytics/add-views', LinkAnalyticsController.AddViewsToLinksController);
 
+linkRouter.get('/analytics/get-graph', authenticate, LinkAnalyticsController.getViewsVsClickGraphController);
+
+
 linkRouter.delete('/delete', authenticate, deleteLinkController);
 
 

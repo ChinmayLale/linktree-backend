@@ -69,3 +69,9 @@ export interface LinkItem {
     images?: string[]; // Optional images for gallery links
     status?: boolean;
 }
+
+export type ChartData = {
+    title: string;
+    views: number;
+    clicks: number;
+};

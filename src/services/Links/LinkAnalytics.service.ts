@@ -1,4 +1,7 @@
+import { title } from "process";
 import { prisma } from "../../db/db.config";
+import { ChartData } from "../../types/misc.types";
+import { getAllUserLinks } from "./getAllUserLinks.service";
 
 
 
@@ -67,11 +70,32 @@ const updateViewsOnLinksService = async (userId: string): Promise<boolean> => {
    }
 }
 
-const getViewsVsClickGraph = (userId: string) =>{
+const getViewsVsClickGraph = async (userId: string): Promise<ChartData[]> => {
    try {
-      
+      if (!userId) {
+         throw new Error("User Id is missing");
+      }
+      const totalViews = await prisma.user.findFirst({
+         where: {
+            id: userId
+         },
+         select: {
+            views: true,
+         }
+      })
+      const getLinks = await getAllUserLinks(userId);
+
+      const chartData = getLinks.map(link => ({
+         title: link.title,         // your "month" field will be link title
+         views: totalViews?.views || 0,       // total views
+         clicks: link.clicks || 0,  // clicks per link
+      }));
+
+      return chartData;
+
    } catch (error) {
       console.log("Somthing Went Wrong While Getting Clicks Vs Views Graph");
+      return [];
    }
 }
 
